@@ -1,10 +1,13 @@
-from flask import Flask
+import os
+import sys
 
-app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "<h1>Welcome to OpenBooks!</h1><p>Your sustainable accounting solution.</p>"
+sys.path.insert(0, os.path.dirname(__file__))
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+
+def app(environ, start_response):
+    start_response('200 OK', [('Content-Type', 'text/plain')])
+    message = 'It works!\n'
+    version = 'Python v' + sys.version.split()[0] + '\n'
+    response = '\n'.join([message, version])
+    return [response.encode()]
